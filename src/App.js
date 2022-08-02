@@ -1,25 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter,Routes,Route} from "react-router-dom";
+// import ReactDOM from "react-dom/client";
+import femsa_logo from './img/femsa2.png';
+
+import Paso1 from './Components/Paso1'
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+    <BrowserRouter>
+
+      <div className="App">
+        <header className="App-header">
+          <img src={femsa_logo} width="100" alt="logo" />
+        </header>
+
+        <Routes>
+          <Route path='/' element={<Paso1 greeting={'hola Bienvenidos a mi Ecommerce'} />} /> */}
+          {/* <Route path='/categoria/:categoriaId' element={<ItemListContainer greeting={'hola Bienvenidos a categorias'} />} />
+          <Route path='/detail/:itemId' element={<ItemDetailContainer/>} />
+          <Route path='/cart' element={<Cart/>} />
+          <Route path='/CheckOut' element={ <CheckOut/> } /> */}
+        </Routes>
+      </div>
+      </BrowserRouter>
+    </>
   );
 }
-
 export default App;
