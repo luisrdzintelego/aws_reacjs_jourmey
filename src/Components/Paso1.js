@@ -1,17 +1,44 @@
-import React from 'react'
+import React, {  useState, useContext } from 'react';
+import { VarContext } from '../Context/VarContext';
+
+
+import { Link } from 'react-router-dom';
+
 import ImgUploader from './ImgUploader';
 
-const paso1 = () => {
+import femsa_logo from '../img/femsa2.png';
+
+const Paso1 = () => {
+
+  const[Nombre,setNombre] = useState("")
+  const ImagenContext = useContext(VarContext);
+  console.log("🚀 ~ ImagenContext", ImagenContext)
+
+  const NameChange = (event) => {
+    console.log(event.target.value);
+    setNombre(event.target.value);
+    ImagenContext.addNombre(event.target.value);
+  }
+
+  const SetName = () => {
+    console.log("🚀 ~ Se Agrego Nombre al Context", Nombre)
+    //ImagenContext.AddNombre(Nombre);
+  }
+
   return (
 	<>
 	 <div>
+        <header className="App-header">
+          <img src={femsa_logo} width="100" alt="logo" />
+        </header>
+
           <p className="text-bienvenido">
               ¡Bienvenido!
             </p>
 
             <div className="campo">
               <label className="label">Ingresa tu Nombre:</label>
-              <input className="text-input" id="nombre"></input>
+              <input className="text-input" id="nombre" nombre={Nombre} onChange={NameChange}></input>
             </div>
             <div className="campo">
               <label  className="label">Negocio:</label>
@@ -23,13 +50,20 @@ const paso1 = () => {
               </select>
             </div>
             <div className="campo">
-              <ImgUploader></ImgUploader>
+              <ImgUploader ></ImgUploader>
             </div>
-
+            <div className="campo">
+            {
+            ImagenContext.UrlImg != "" 
+                ? <Link className="btn btn-primary c-femsa my-3" to="/Paso2">Continuar</Link>
+                : <>
+                  </>
+              }
+            </div>
           </div>
 	
 	</>
   )
 }
 
-export default paso1
+export default Paso1

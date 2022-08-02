@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { VarContext } from '../Context/VarContext';
+
 import '../Components/ImgUploader.css'
 // Specify camera icon to replace button text 
 import camera from '../img/camera.svg'; // replace it with your path
@@ -6,8 +8,16 @@ import camera from '../img/camera.svg'; // replace it with your path
 // Specify your default image
 import defaultUser from '../img/defaultUser.png'; // replace it with your path
 
+
+const ImgUploader = () => {
+
+const ImagenContext = useContext(VarContext);
+
 // Profile upload helper
 const HandleImageUpload = () => {
+
+  //console.log("🚀 ~ ImagenContext", ImagenContext)
+
   // we are referencing the file input
   const imageRef = useRef();
 
@@ -32,6 +42,8 @@ const HandleImageUpload = () => {
   useEffect(() => {
     if (selectedFile) {
       const objectURL = URL.createObjectURL(selectedFile);
+
+      ImagenContext.addImg(objectURL)
       setDefaultUserImage(objectURL);
       return () => URL.revokeObjectURL(objectURL);
     }
@@ -46,7 +58,7 @@ const HandleImageUpload = () => {
 };
 
 // Image component
-export const ItemImage = (props) => {
+ const ItemImage = (props) => {
   const {itemImage, itemImageAlt} = props;
   return (
     <>
@@ -60,7 +72,7 @@ export const ItemImage = (props) => {
 };
 
 // Button with icon component
-export const CommonClickButtonIcon = (props) => {
+const CommonClickButtonIcon = (props) => {
   const {
     onHandleSubmitForm, iconImageValue, altImg,
   } = props;
@@ -81,7 +93,7 @@ export const CommonClickButtonIcon = (props) => {
   );
 };
 
-const ImgUploader = () => {
+
   const {
     defaultUserImage,
     handleChange,
