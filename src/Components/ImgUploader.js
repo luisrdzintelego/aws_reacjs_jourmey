@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { VarContext } from '../Context/VarContext';
+import axios from "axios";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import '../Components/ImgUploader.css'
 // Specify camera icon to replace button text 
@@ -10,6 +14,9 @@ import defaultUser from '../img/defaultUser.png'; // replace it with your path
 
 
 const ImgUploader = () => {
+
+//const notify_error = () => toast("Error!");
+//const notify_good = () => toast("Imagen agregada correctamente");
 
 const ImagenContext = useContext(VarContext);
 
@@ -34,16 +41,63 @@ const HandleImageUpload = () => {
 
   // On each change let user have access to a selected file
   const handleChange = (event) => {
+
+
     const file = event.target.files[0];
     setSelectedFile(file);
   };
 
+
+  const resetFile = () => {
+    // Reset file input control
+    document.getElementsByName("file")[0].value = null;
+  }
+
+  
   // Clean up the selection to avoid memory leak
   useEffect(() => {
     if (selectedFile) {
-      const objectURL = URL.createObjectURL(selectedFile);
+      
+      const data = new FormData();
 
-      ImagenContext.addImg(objectURL)
+      /*
+      for (let i = 0; i < selectedFile.length; i++) {
+        data.append("file[]", selectedFile[i]);
+      }
+      */
+      //data.append("file[image]", selectedFile);
+      data.append('file', selectedFile)
+      console.log("🚀 ~ data", data)
+      console.log("🚀 ~ selectedFile", selectedFile)
+      
+      //let url = "http://localhost:8888/femsa/backend/server.php";
+      let url = "https://www.intelego.com.mx/cursos_elearning/femsa/valores_femsa/backend/server.php";
+  
+      axios.post(url, data, {
+          // receive two parameter endpoint url ,form data
+        })
+        .then((res) => {
+          // then print response status
+          //this.setState({ responseArray: res.data });
+          //this.resetFile();
+          console.log("RES:: " , res)
+          //toast('-'+ res.data.url +'--');
+          //toast('-'+ res.data.status +'--');
+          //toast('-'+ res.data.error +'--');
+          //toast('-'+ res.data.message +'--');
+
+          ImagenContext.addImg(res.data.url)
+
+          resetFile()
+        },error=>{
+          ImagenContext.addImg("error")
+          toast('-'+ error +'--');
+          //alert(error);
+        });
+
+
+      const objectURL = URL.createObjectURL(selectedFile);
+      //ImagenContext.addImg(objectURL)
       setDefaultUserImage(objectURL);
       return () => URL.revokeObjectURL(objectURL);
     }
@@ -102,7 +156,24 @@ const CommonClickButtonIcon = (props) => {
   } = HandleImageUpload();
 
   return (
+
+
+    
     <div className="edit-profile-container ">
+
+        <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        />
+        {/* Same as */}
+        <ToastContainer />
 
       <div className="edit-profile-image white-grad">
         <ItemImage
@@ -117,6 +188,7 @@ const CommonClickButtonIcon = (props) => {
         <input
           ref={imageRef}
           type="file"
+          name="file"
           style={{ display: 'none' }}
           accept="image/*"
           onChange={handleChange}

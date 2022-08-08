@@ -2,11 +2,12 @@ import React, {  useState, useContext } from 'react';
 import { VarContext } from '../Context/VarContext';
 
 
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import ImgUploader from './ImgUploader';
 
 import femsa_logo from '../img/femsa2.png';
+
 
 const Paso1 = () => {
 
@@ -20,11 +21,22 @@ const Paso1 = () => {
     ImagenContext.addNombre(event.target.value);
   }
 
-  const SetName = () => {
-    console.log("🚀 ~ Se Agrego Nombre al Context", Nombre)
-    //ImagenContext.AddNombre(Nombre);
+
+  const [redirectNow, setRedirectNow] = useState(false);
+
+  
+
+  // const SetName = () => {
+  //   console.log("🚀 ~ Se Agrego Nombre al Context", Nombre)
+  //   //ImagenContext.AddNombre(Nombre);
+  // }
+
+  const setTimeoutFun = () => {
+    setTimeout(() => setRedirectNow(true), 3000);
   }
 
+
+  
   return (
 	<>
 	 <div>
@@ -36,10 +48,15 @@ const Paso1 = () => {
               ¡Bienvenido!
             </p>
 
-            <div className="campo">
-              <label className="label">Ingresa tu Nombre:</label>
-              <input className="text-input" id="nombre" nombre={Nombre} onChange={NameChange}></input>
-            </div>
+                <div className="campo">
+                  <label className="label">Ingresa tu Nombre:</label>
+                  <input  required placeholder="Nombre" id="nombre" onChange={NameChange}  className="text-input"></input>
+                </div>
+
+                    {/* <label className="label" htmlFor="calificacion">Calificación:</label>
+                    <input required placeholder="Calificación" type="number" id="calificacion" onChange={this.manejarCambio} value={this.state.videojuego.calificacion} className="input" /> */}
+
+
             <div className="campo">
               <label  className="label">Negocio:</label>
               <select className="text-input" name="negocio" id="negocio">
@@ -49,17 +66,25 @@ const Paso1 = () => {
               <option value="n4">negocio 4</option>
               </select>
             </div>
+
+
             <div className="campo">
               <ImgUploader ></ImgUploader>
             </div>
-            <div className="campo">
-            {
-            ImagenContext.UrlImg != "" 
-                ? <Link className="btn btn-primary c-femsa my-3" to="/Paso2">Continuar</Link>
-                : <>
-                  </>
-              }
-            </div>
+
+                 {
+                ImagenContext.UrlImg !== "" 
+                    ? setTimeoutFun()
+                    : <>
+                      </>
+                  } 
+              {
+              redirectNow === true 
+              ?  <Navigate  to="/Paso2"/>
+              : <>
+                </>
+            } 
+
           </div>
 	
 	</>
