@@ -45,7 +45,7 @@ const Paso1 = () => {
         </header>
 
           <p className="text-bienvenido">
-              ¡Bienvenido!
+              ¡Bienvenido Intelego!
             </p>
 
                 <div className="campo">
