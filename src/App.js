@@ -16,8 +16,9 @@ function App() {
     <>
     <CustomVarContext>
 
-      <BrowserRouter basename="/cursos_elearning/femsa/valores_femsa" >
+      {/* <BrowserRouter basename="/cursos_elearning/femsa/valores_femsa" > */}
       {/* <BrowserRouter basename="/femsa" > */}
+      <BrowserRouter basename="/" >
 
     
       <div className="App">

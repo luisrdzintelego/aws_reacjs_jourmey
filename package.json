@@ -2,8 +2,8 @@
   "name": "femsa-app",
   "version": "0.1.0",
   "private": true,
-  "_comment": "femsa/",
-  "homepage": "cursos_elearning/femsa/valores_femsa/",
+  "_comment": "cursos_elearning/femsa/valores_femsa/",
+  "homepage": "/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
