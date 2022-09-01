@@ -1,0 +1,6 @@
+type JourneyDB @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Nombre: String
+  url_img: String
+  Negocio: String
+} 

@@ -7,6 +7,7 @@ import 'animate.css';
 import '../Components/Paso2.css'
 import ImgContainer from './ImgContainer';
 
+
 const Paso2 = () => {
 
 

@@ -9,7 +9,13 @@ import ImgUploader from './ImgUploader';
 import femsa_logo from '../img/femsa2.png';
 
 
+import { DataStore } from '@aws-amplify/datastore';
+import { JourneyDB } from '../models';
+
+
 const Paso1 = () => {
+
+
 
   const [Lugar,setLugar]=useState([])
 
@@ -17,11 +23,24 @@ const Paso1 = () => {
   const ImagenContext = useContext(VarContext);
   //console.log("🚀 ~ ImagenContext", ImagenContext)
 
+  const sendInfo = async(nombre,url_img,Negocio)=>{
+
+    await DataStore.save(
+      new JourneyDB({
+        "Nombre": "Lorem ipsum dolor sit amet",
+        "url_img": "Lorem ipsum dolor sit amet",
+        "Negocio": "Lorem ipsum dolor sit amet"
+      })
+    );
+  }
+
+
   const NameChange = (event) => {
     console.log(event.target.value);
     setNombre(event.target.value);
     ImagenContext.addNombre(event.target.value);
     obtenerLugar();
+
   }
 
 
@@ -49,7 +68,10 @@ const Paso1 = () => {
   // }
 
   const setTimeoutFun = () => {
-    setTimeout(() => setRedirectNow(true), 3000);
+    setTimeout(() => {
+      sendInfo(ImagenContext.Nombre,ImagenContext.UrlImg, "NEGOCIO DEFAULT");
+      setRedirectNow(true)
+    }, 3000);
   }
 
   
