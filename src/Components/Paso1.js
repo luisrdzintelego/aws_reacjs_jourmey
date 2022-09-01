@@ -9,29 +9,46 @@ import ImgUploader from './ImgUploader';
 import femsa_logo from '../img/femsa2.png';
 
 
-import { DataStore } from '@aws-amplify/datastore';
-import { JourneyDB } from '../models';
+//import { DataStore } from '@aws-amplify/datastore';
+//import { JourneyDB } from '../models';
 
 
 const Paso1 = () => {
 
-
-
-  const [Lugar,setLugar]=useState([])
-
   const[Nombre,setNombre] = useState("")
+  const [Lugar,setLugar]=useState([])
+  const [redirectNow, setRedirectNow] = useState(false);
+
+  const [Info, setInfo] = useState(false);
+  console.log("🚀 ~ Info", Info)
+
+
+
   const ImagenContext = useContext(VarContext);
+
   //console.log("🚀 ~ ImagenContext", ImagenContext)
 
-  const sendInfo = async(nombre,url_img,Negocio)=>{
 
-    await DataStore.save(
-      new JourneyDB({
-        "Nombre": "Lorem ipsum dolor sit amet",
-        "url_img": "Lorem ipsum dolor sit amet",
-        "Negocio": "Lorem ipsum dolor sit amet"
-      })
-    );
+  // const sendInfo = async(nombre,url_img,negocio)=>{
+  //   console.log("🚀 ~ sendInfo", sendInfo);
+  //   await DataStore.save(
+  //     new JourneyDB({
+  //       "Nombre": nombre,
+  //       "url_img": url_img,
+  //       "Negocio": negocio
+  //     })
+  //   );
+  // }
+
+  async function onChange(e) {
+    const file = e.target.files[0];
+    try {
+      await Storage.put(file.name, file, {
+        contentType: "image/png", // contentType is optional
+      });
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+    }
   }
 
 
@@ -39,14 +56,10 @@ const Paso1 = () => {
     console.log(event.target.value);
     setNombre(event.target.value);
     ImagenContext.addNombre(event.target.value);
-    obtenerLugar();
-
   }
 
-
-  const [redirectNow, setRedirectNow] = useState(false);
-
   const obtenerLugar=()=>{
+    console.log("🚀 ~ obtenerLugar")
     getLugar()
     .then((resultado)=>{
         return resultado.json()
@@ -60,7 +73,15 @@ const Paso1 = () => {
         ImagenContext.addRegion(lugares.region);
 
     })
-}
+
+    setInfo(true)
+  }
+
+  console.log("🚀 ~ Info", Info)
+
+  if(Info === false){
+    obtenerLugar()
+  } 
 
   // const SetName = () => {
   //   console.log("🚀 ~ Se Agrego Nombre al Context", Nombre)
@@ -69,11 +90,9 @@ const Paso1 = () => {
 
   const setTimeoutFun = () => {
     setTimeout(() => {
-      sendInfo(ImagenContext.Nombre,ImagenContext.UrlImg, "NEGOCIO DEFAULT");
       setRedirectNow(true)
     }, 3000);
   }
-
   
   return (
 	<>
@@ -106,6 +125,8 @@ const Paso1 = () => {
             </div>
 
 
+
+            {/* <input type="file" onChange={onChange} /> */}
             <div className="campo">
               <ImgUploader ></ImgUploader>
             </div>
@@ -113,14 +134,12 @@ const Paso1 = () => {
                  {
                 ImagenContext.UrlImg !== "" 
                     ? setTimeoutFun()
-                    : <>
-                      </>
-                  } 
+                    : <></>
+                  }       
               {
               redirectNow === true 
-              ?  <Navigate  to="/Paso2"/>
-              : <>
-                </>
+              ? <Navigate to="/Paso2"/>
+              : <></>
             } 
 
           </div>

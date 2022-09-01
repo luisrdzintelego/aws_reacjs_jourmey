@@ -8,6 +8,14 @@ import Paso2 from './Components/Paso2';
 import Paso3 from './Components/Paso3';
 import Journey from './Components/Journey';
 
+import { Amplify } from "aws-amplify";
+import config from "../src/aws-exports.js";
+
+Amplify.configure({
+  ...config,
+});
+
+
 function App() {
 
   //console.log("window.location.host.split", window.location.host.split(".")[1])

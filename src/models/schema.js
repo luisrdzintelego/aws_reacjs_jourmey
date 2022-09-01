@@ -31,6 +31,27 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "Pais": {
+                    "name": "Pais",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Region": {
+                    "name": "Region",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Ciudad": {
+                    "name": "Ciudad",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -76,5 +97,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "4acaf409a91a2f3cffce066e06281a83"
+    "version": "df168130f338cefc1367afab7506a606"
 };

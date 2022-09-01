@@ -13,12 +13,36 @@ import camera from '../img/camera.svg'; // replace it with your path
 import defaultUser from '../img/defaultUser.png'; // replace it with your path
 
 
+import { DataStore } from '@aws-amplify/datastore';
+import { JourneyDB } from '../models';
+
 const ImgUploader = () => {
 
 //const notify_error = () => toast("Error!");
 //const notify_good = () => toast("Imagen agregada correctamente");
 
 const ImagenContext = useContext(VarContext);
+
+
+const sendInfo = async(nombre,url_img,negocio,pais,region,ciudad)=>{
+  console.log("🚀 ~ ciudad", ciudad)
+  console.log("🚀 ~ region", region)
+  console.log("🚀 ~ pais", pais)
+  console.log("🚀 ~ negocio", negocio)
+  console.log("🚀 ~ url_img", url_img)
+  console.log("🚀 ~ nombre", nombre)
+  await DataStore.save(
+    new JourneyDB({
+      "Nombre": nombre,
+      "url_img": url_img,
+      "Negocio": negocio,
+      "Pais": pais,
+      "Region": region,
+      "Ciudad": ciudad
+    })
+  );
+}
+
 
 // Profile upload helper
 const HandleImageUpload = () => {
@@ -102,7 +126,16 @@ const HandleImageUpload = () => {
       //ImagenContext.addImg(objectURL)
       setDefaultUserImage(objectURL);
 
-      ImagenContext.addImg(selectedFile)
+      ImagenContext.addImg(objectURL)
+      sendInfo(
+        ImagenContext.Nombre,
+        objectURL, 
+        "Negocio-Seleccionado",
+        ImagenContext.Pais,
+        ImagenContext.Region,
+        ImagenContext.Ciudad
+        )
+
       return () => URL.revokeObjectURL(objectURL);
     }
   }, [selectedFile]);

@@ -3,4 +3,8 @@ type JourneyDB @model @auth(rules: [{allow: public}]) {
   Nombre: String
   url_img: String
   Negocio: String
-} 
+  Pais: String
+  Region: String
+  Ciudad: String
+}
+ 

@@ -13,6 +13,9 @@ export declare class JourneyDB {
   readonly Nombre?: string | null;
   readonly url_img?: string | null;
   readonly Negocio?: string | null;
+  readonly Pais?: string | null;
+  readonly Region?: string | null;
+  readonly Ciudad?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<JourneyDB, JourneyDBMetaData>);
