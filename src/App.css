@@ -3,6 +3,10 @@
   font-size: 40px;
   color: darkred;
 }
+.text-localizacion{
+  font-size: 25px;
+  color: darkred;
+}
 
 .App {
 text-align: center;

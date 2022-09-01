@@ -58,13 +58,15 @@ const HandleImageUpload = () => {
   useEffect(() => {
     if (selectedFile) {
       
+
+      /*----PHP-----
       const data = new FormData();
 
-      /*
+      
       for (let i = 0; i < selectedFile.length; i++) {
         data.append("file[]", selectedFile[i]);
       }
-      */
+  
       //data.append("file[image]", selectedFile);
       data.append('file', selectedFile)
       console.log("🚀 ~ data", data)
@@ -94,11 +96,13 @@ const HandleImageUpload = () => {
           toast('-'+ error +'--');
           //alert(error);
         });
-
+        */
 
       const objectURL = URL.createObjectURL(selectedFile);
       //ImagenContext.addImg(objectURL)
       setDefaultUserImage(objectURL);
+
+      ImagenContext.addImg(selectedFile)
       return () => URL.revokeObjectURL(objectURL);
     }
   }, [selectedFile]);

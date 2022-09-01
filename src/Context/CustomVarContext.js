@@ -4,8 +4,11 @@ import {VarContext} from './VarContext'
 
 export const CustomVarContext = ({children}) => {
 
-	const [UrlImg, setUrlImg] = useState ("")
 	const [Nombre, setNombre] = useState ("")
+	const [UrlImg, setUrlImg] = useState ("")
+	const [Ciudad, setCiudad] = useState ("")
+	const [Pais, setPais] = useState ("")
+	const [Region, setRegion] = useState ("")
     //console.log("🚀 ~ UrlImg", UrlImg)
 
 	const [productosCart, setProductosCart] = useState ([])
@@ -15,10 +18,28 @@ export const CustomVarContext = ({children}) => {
 		console.log("🚀 ~ url", url)
 	}
 
+	const addCiudad = (var1) => {
+		setCiudad(var1)
+		console.log("🚀 ~ Ciudad", var1)
+	}
+
+	const addPais = (var1) => {
+		setPais(var1)
+		console.log("🚀 ~ Pais", var1)
+	}
+
+	const addRegion = (var1) => {
+		setRegion(var1)
+		console.log("🚀 ~ Region", var1)
+	}
+
 	const addNombre = (var1) => {
 		setNombre(var1)
 		console.log("🚀 ~ nombre", var1)
 	}
+
+
+
 
 	const addItem = (id,nombre,precio,img,cantidad) => {
 
@@ -65,7 +86,26 @@ export const CustomVarContext = ({children}) => {
 	}
 
   return (
-	<VarContext.Provider value={{addNombre, Nombre, addImg, UrlImg, productosCart, addItem, removeItem, vaciarCart, isInCart, totalCart, cantidadCart, restarItem, sumarItem  }}>
+	<VarContext.Provider value={{
+		addCiudad, 
+		Ciudad, 
+		addPais, 
+		Pais, 
+		addRegion, 
+		Region, 
+		addNombre, 
+		Nombre, 
+		addImg, 
+		UrlImg, 
+		productosCart, 
+		addItem, 
+		removeItem, 
+		vaciarCart, 
+		isInCart, 
+		totalCart, 
+		cantidadCart, 
+		restarItem, 
+		sumarItem  }}>
 		{children}
 	</VarContext.Provider>
   )

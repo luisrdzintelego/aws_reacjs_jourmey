@@ -40,6 +40,18 @@ const Paso2 = () => {
               <b>{ImagenContext.Nombre}</b><br></br>, eres parte de algo grande.
             </p>
 
+             { 
+            ImagenContext.Pais !== "" 
+                ?  <p className="animate__animated animate__fadeInDown text-localizacion">
+                Nos visitas desde:<br></br>
+                <b>
+                {ImagenContext.Pais}, {ImagenContext.Ciudad}, {ImagenContext.Region}  
+                </b></p>
+                : <></>
+              }
+
+
+
             <div className="campo">
             <div className="edit-profile-container2 ">
               <div className="edit-profile-image white-grad2 animate__animated animate__flipInX">

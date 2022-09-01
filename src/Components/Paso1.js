@@ -1,6 +1,6 @@
 import React, {  useState, useContext } from 'react';
 import { VarContext } from '../Context/VarContext';
-
+import { getLocation, getLugar } from '../Apis/Api'
 
 import { Link, Navigate } from 'react-router-dom';
 
@@ -11,20 +11,37 @@ import femsa_logo from '../img/femsa2.png';
 
 const Paso1 = () => {
 
+  const [Lugar,setLugar]=useState([])
+
   const[Nombre,setNombre] = useState("")
   const ImagenContext = useContext(VarContext);
-  console.log("🚀 ~ ImagenContext", ImagenContext)
+  //console.log("🚀 ~ ImagenContext", ImagenContext)
 
   const NameChange = (event) => {
     console.log(event.target.value);
     setNombre(event.target.value);
     ImagenContext.addNombre(event.target.value);
+    obtenerLugar();
   }
 
 
   const [redirectNow, setRedirectNow] = useState(false);
 
-  
+  const obtenerLugar=()=>{
+    getLugar()
+    .then((resultado)=>{
+        return resultado.json()
+    })
+    .then((lugares)=>{
+        //no me queda claro por que utilizar .results
+        console.log(lugares.city)
+        setLugar(lugares.resultado)
+        ImagenContext.addCiudad(lugares.city);
+        ImagenContext.addPais(lugares.country);
+        ImagenContext.addRegion(lugares.region);
+
+    })
+}
 
   // const SetName = () => {
   //   console.log("🚀 ~ Se Agrego Nombre al Context", Nombre)
@@ -34,7 +51,6 @@ const Paso1 = () => {
   const setTimeoutFun = () => {
     setTimeout(() => setRedirectNow(true), 3000);
   }
-
 
   
   return (
